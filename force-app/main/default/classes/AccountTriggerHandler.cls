@@ -13,55 +13,19 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
 
     //Override virtual methods
     public override void beforeInsert() {
-        // setTypeProspect Helper
-        for (Account acc : newAccList) {
-            if (acc.Type == null) {
-                acc.Type = 'Prospect';
-            }
-        }
+        // Referencing setTypeProspect Helper method
+        AccountHelper.setTypeProspect(newAccList);
 
-        //addressCopy Helper
-        for (Account acc : newAccList) {
-            if (acc.ShippingStreet != null) {
-                acc.BillingStreet = acc.ShippingStreet;
-            }
-
-            if (acc.ShippingCity != null) {
-                acc.BillingCity = acc.ShippingCity;
-            }
-
-            if (acc.ShippingState != null) {
-                acc.BillingState = acc.ShippingState;
-            }
-
-            if (acc.ShippingPostalCode != null) {
-                acc.BillingPostalCode = acc.ShippingPostalCode;
-            }
-
-            if (acc.ShippingCountry != null) {
-                acc.BillingCountry = acc.ShippingCountry;
-            }
-        }
+        // Referencing addressCopy Helper method
+        AccountHelper.addressCopy(newAccList);
         
-        // setRating Helper
-        for (Account acc : newAccList) {
-            if (acc.Phone != null && acc.Website != null && acc.Fax != null) {
-                acc.Rating = 'Hot';
-            }
-        }
+        // Referencing setRating Helper method
+        AccountHelper.setRating(newAccList);
     }
 
     public override void afterInsert() {
-        // defaultContact Helper
-        List<Contact> contacts = new List<Contact>();   
-        for(Account acc : newAccList){
-            Contact con = new Contact();
-            con.LastName = 'DefaultContact';
-            con.Email = 'default@email.com';
-            con.AccountId = acc.Id;
-            contacts.add(con);
-        }
-        insert contacts; 
+        // Referencing defaultContact Helper
+        AccountHelper.defaultContact(newAccList);
     }
 
 }
