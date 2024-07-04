@@ -19,4 +19,8 @@ public with sharing class OpportunityTriggerHandler extends TriggerHandler {
     public override void beforeDelete() {
         OpportunityHelper.deleteCloseWonOpportunity(oldOppList);
     }
+
+    public override void beforeInsert() {
+        OpportunityHelper.setType(newOppList);
+    }
 }

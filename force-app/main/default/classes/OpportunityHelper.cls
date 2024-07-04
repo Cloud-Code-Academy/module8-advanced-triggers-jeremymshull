@@ -20,6 +20,14 @@ public with sharing class OpportunityHelper {
         }
     }
 
+    public static void setType (List<Opportunity> newOpps) {
+        for (Opportunity opp : newOpps) {
+            if (opp.Type == null){
+                opp.Type = 'New Customer';
+            }    
+        }
+    }
+
     public static void setPrimaryContact (List<Opportunity> newOpps) {
         //Get contacts related to the opportunity account
         Set<Id> accountIds = new Set<Id>();
