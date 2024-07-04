@@ -12,11 +12,14 @@ public with sharing class OpportunityHelper {
         //Account related to the opportunities 
         Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Industry FROM Account WHERE Id IN (SELECT AccountId FROM Opportunity WHERE Id IN :oldOpps)]);
         for(Opportunity opp : oldOpps){
-            if(opp.StageName == 'Closed Won'){
+            if (opp.isClosed) {
+                opp.addError('Cannot delete closed opportunity');
+            } else if (opp.StageName == 'Closed Won'){
                 if(accounts.get(opp.AccountId).Industry == 'Banking'){
                     opp.addError('Cannot delete closed opportunity');
-                }
+                }    
             }
+            
         }
     }
 
