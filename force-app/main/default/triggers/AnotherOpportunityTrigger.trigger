@@ -18,6 +18,9 @@ RESOURCES:
 https://www.salesforceben.com/12-salesforce-apex-best-practices/
 https://developer.salesforce.com/blogs/developer-relations/2015/01/apex-best-practices-15-apex-commandments
 */
+// Code moved into OpportunityTrigger, OpportunityTriggerHandler, and Opportunity Helper
+
+
 trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, before update, after update, before delete, after delete, after undelete) {
     // if (Trigger.isBefore){
     //     if (Trigger.isInsert){
@@ -26,40 +29,40 @@ trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, b
     //         if (opp.Type == null){
     //             opp.Type = 'New Customer';
     //         }        
-    //     } else if (Trigger.isDelete){
-    //         // Prevent deletion of closed Opportunities
-    //         for (Opportunity oldOpp : Trigger.old){
-    //             if (oldOpp.IsClosed){
-    //                 oldOpp.addError('Cannot delete closed opportunity');
-    //             }
-    //         }
-    //     }
+        // } else if (Trigger.isDelete){
+        //     // Prevent deletion of closed Opportunities
+        //     for (Opportunity oldOpp : Trigger.old){
+        //         if (oldOpp.IsClosed){
+        //             oldOpp.addError('Cannot delete closed opportunity');
+        //         }
+        //     }
+        // }
     // }
 
     // if (Trigger.isAfter){
     //     if (Trigger.isInsert){
     //         // Create a new Task for newly inserted Opportunities
-    //         List<Task> tasksToInsert = new List<Task>();
-    //         for (Opportunity opp : Trigger.new){
-    //             Task tsk = new Task();
-    //             tsk.Subject = 'Call Primary Contact';
-    //             tsk.WhatId = opp.Id;
-    //             tsk.WhoId = opp.Primary_Contact__c;
-    //             tsk.OwnerId = opp.OwnerId;
-    //             tsk.ActivityDate = Date.today().addDays(3); 
-    //             tasksToInsert.add(tsk);
-    //         }
-    //         insert tasksToInsert;
+            // List<Task> tasksToInsert = new List<Task>();
+            // for (Opportunity opp : Trigger.new){
+            //     Task tsk = new Task();
+            //     tsk.Subject = 'Call Primary Contact';
+            //     tsk.WhatId = opp.Id;
+            //     tsk.WhoId = opp.Primary_Contact__c;
+            //     tsk.OwnerId = opp.OwnerId;
+            //     tsk.ActivityDate = Date.today().addDays(3); 
+            //     tasksToInsert.add(tsk);
+            // }
+            // insert tasksToInsert;
     //     } else if (Trigger.isUpdate){
     //         // Append Stage changes in Opportunity Description
-    //         for (Opportunity opp : Trigger.new){
-    //             for (Opportunity oldOpp : Trigger.old){
-    //                 if (opp.StageName != null){
-    //                     opp.Description += '\n Stage Change:' + opp.StageName + ':' + DateTime.now().format();
-    //                 }
-    //             }                
-    //         }
-    //         update Trigger.new;
+            // for (Opportunity opp : Trigger.new){
+            //     for (Opportunity oldOpp : Trigger.old){
+            //         if (opp.StageName != null){
+            //             opp.Description += '\n Stage Change:' + opp.StageName + ':' + DateTime.now().format();
+            //         }
+            //     }                
+            // }
+            // update Trigger.new;
     //     }
     //     // Send email notifications when an Opportunity is deleted 
     //     else if (Trigger.isDelete){
@@ -77,21 +80,21 @@ trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, b
     // - Uses Salesforce's Messaging.SingleEmailMessage to send the email.
     // */
     // private static void notifyOwnersOpportunityDeleted(List<Opportunity> opps) {
-    //     List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
-    //     for (Opportunity opp : opps){
-    //         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-    //         String[] toAddresses = new String[] {[SELECT Id, Email FROM User WHERE Id = :opp.OwnerId].Email};
-    //         mail.setToAddresses(toAddresses);
-    //         mail.setSubject('Opportunity Deleted : ' + opp.Name);
-    //         mail.setPlainTextBody('Your Opportunity: ' + opp.Name +' has been deleted.');
-    //         mails.add(mail);
-    //     }        
+        // List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+        // for (Opportunity opp : opps){
+        //     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        //     String[] toAddresses = new String[] {[SELECT Id, Email FROM User WHERE Id = :opp.OwnerId].Email};
+        //     mail.setToAddresses(toAddresses);
+        //     mail.setSubject('Opportunity Deleted : ' + opp.Name);
+        //     mail.setPlainTextBody('Your Opportunity: ' + opp.Name +' has been deleted.');
+        //     mails.add(mail);
+        // }        
         
-    //     try {
-    //         Messaging.sendEmail(mails);
-    //     } catch (Exception e){
-    //         System.debug('Exception: ' + e.getMessage());
-    //     }
+        // try {
+        //     Messaging.sendEmail(mails);
+        // } catch (Exception e){
+        //     System.debug('Exception: ' + e.getMessage());
+        // }
     // }
 
     // /*

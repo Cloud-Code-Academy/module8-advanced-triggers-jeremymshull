@@ -11,6 +11,8 @@ public with sharing class OpportunityTriggerHandler extends TriggerHandler {
         this.oldOppMap = (Map<Id, Opportunity>) Trigger.oldMap;
     }
 
+    
+
     public override void beforeUpdate() {
         OpportunityHelper.amountValidation(newOppList);
         OpportunityHelper.setPrimaryContact(newOppList);
@@ -22,5 +24,21 @@ public with sharing class OpportunityTriggerHandler extends TriggerHandler {
 
     public override void beforeInsert() {
         OpportunityHelper.setType(newOppList);
+    }
+
+    public override void afterInsert() {
+        OpportunityHelper.insertTask(newOppList);
+    }
+
+    public override void afterUpdate() {
+        OpportunityHelper.updateDescriptionFromStage(newOppList, oldOppMap);     
+    }
+
+    public override void afterDelete() {
+        OpportunityHelper.notifyOwnersOpportunityDeleted(oldOppList);
+    }
+
+    public override void afterUndelete() {
+        OpportunityHelper.assignPrimaryContact(newOppMap);
     }
 }
